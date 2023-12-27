@@ -10,6 +10,21 @@ const initialState = {
 	user: null,
 };
 
+export const getBaseUrls = () => {
+	if (
+		window.location.hostname.includes('localhost') ||
+		window.location.hostname.includes('dev')
+	) {
+		return {
+			dev: 'http://localhost:5000',
+		};
+	} else {
+		return {
+			dev: 'https://worrisome-red-viper.cyclic.app',
+		};
+	}
+};
+
 export const createAccount = createAsyncThunk(
 	'auth/signup',
 	async (payload, { rejectWithValue }) => {
@@ -20,7 +35,7 @@ export const createAccount = createAsyncThunk(
 				},
 			};
 			const response = await axios.post(
-				`http://localhost:5000/api/user`,
+				`${getBaseUrls().dev}/api/user`,
 				{
 					name: payload.name,
 					email: payload.email,
@@ -62,7 +77,7 @@ export const login = createAsyncThunk(
 				},
 			};
 			const response = await axios.post(
-				`/api/auth`,
+				`${getBaseUrls().dev}/api/auth`,
 				{
 					email: payload.email,
 					password: payload.password,
