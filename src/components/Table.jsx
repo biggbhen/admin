@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { productSelector } from '../app/utils/selectors/selectors';
+import { getProducts } from '../app/features/products/ProductSlice';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -28,43 +31,50 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	},
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-	return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 export default function CustomizedTables() {
+	const dispatch = useDispatch();
+	const prodSelector = useSelector(productSelector);
+	const [data, setData] = React.useState([]);
+
+	React.useEffect(() => {
+		dispatch(getProducts());
+		if (prodSelector.products.length !== 0) {
+			setData([...prodSelector.products]);
+		} else {
+			dispatch(getProducts());
+		}
+		// eslint-disable-next-line
+	}, [prodSelector.loading === 'created', dispatch]);
+
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 700 }} aria-label='customized table'>
 				<TableHead>
 					<TableRow>
-						<StyledTableCell>Dessert (100g serving)</StyledTableCell>
-						<StyledTableCell align='right'>Calories</StyledTableCell>
-						<StyledTableCell align='right'>Fat&nbsp;(g)</StyledTableCell>
-						<StyledTableCell align='right'>Carbs&nbsp;(g)</StyledTableCell>
-						<StyledTableCell align='right'>Protein&nbsp;(g)</StyledTableCell>
+						<StyledTableCell>name</StyledTableCell>
+						<StyledTableCell align='right'>category</StyledTableCell>
+						<StyledTableCell align='right'>sales price</StyledTableCell>
+						<StyledTableCell align='right'>default price</StyledTableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map((row) => (
-						<StyledTableRow key={row.name}>
-							<StyledTableCell component='th' scope='row'>
-								{row.name}
-							</StyledTableCell>
-							<StyledTableCell align='right'>{row.calories}</StyledTableCell>
-							<StyledTableCell align='right'>{row.fat}</StyledTableCell>
-							<StyledTableCell align='right'>{row.carbs}</StyledTableCell>
-							<StyledTableCell align='right'>{row.protein}</StyledTableCell>
-						</StyledTableRow>
-					))}
+					{data.length > 0 &&
+						data.map((row, id) => (
+							<StyledTableRow key={id}>
+								<StyledTableCell component='th' scope='row'>
+									{row.name}
+								</StyledTableCell>
+								<StyledTableCell align='right'>
+									{row.category.name}
+								</StyledTableCell>
+								<StyledTableCell align='right'>
+									{row.salesPrice}
+								</StyledTableCell>
+								<StyledTableCell align='right'>
+									{row.defaultPrice}
+								</StyledTableCell>
+							</StyledTableRow>
+						))}
 				</TableBody>
 			</Table>
 		</TableContainer>
