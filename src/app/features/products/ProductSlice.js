@@ -159,7 +159,7 @@ const productSlice = createSlice({
 			})
 			.addCase(getProducts.rejected, (state, action) => {
 				state.loading = 'failed';
-				state.error = action.payload.response.data.msg;
+				state.error = action?.payload?.response?.data.msg;
 			})
 			.addCase(getProducts.fulfilled, (state, action) => {
 				state.loading = 'success';
@@ -196,7 +196,7 @@ const productSlice = createSlice({
 			})
 			.addCase(getCategories.rejected, (state, action) => {
 				state.loading = 'failed';
-				state.error = action.payload.response.data.msg;
+				state.error = action?.payload?.response?.data.msg;
 			})
 			.addCase(getCategories.fulfilled, (state, action) => {
 				state.loading = 'success';

@@ -108,7 +108,7 @@ const HomePage = () => {
 				<CreateCategory />
 				<h3 className=' font-bold  text-[1.5rem] mb-4'>Kitchen</h3>
 
-				{prodSelector.products.length > 0 ? (
+				{prodSelector?.products?.length !== 0 ? (
 					<CustomizedTables />
 				) : (
 					<h2 className='text-center '>
@@ -161,8 +161,8 @@ const HomePage = () => {
 								onChange={handleChange}
 								className='w-full'
 								required>
-								{prodSelector.categories.length !== 0 ? (
-									prodSelector.categories.map((item, ind) => (
+								{prodSelector?.categories?.length ? (
+									prodSelector?.categories.map((item, ind) => (
 										<MenuItem value={item.name} key={ind}>
 											{item.name}
 										</MenuItem>
