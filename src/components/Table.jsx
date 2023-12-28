@@ -52,8 +52,8 @@ export default function CustomizedTables() {
 				<TableHead>
 					<TableRow>
 						<StyledTableCell>name</StyledTableCell>
-						<StyledTableCell align='right'>category</StyledTableCell>
-						<StyledTableCell align='right'>sales price</StyledTableCell>
+						<StyledTableCell align='center'>category</StyledTableCell>
+						<StyledTableCell align='center'>sales price</StyledTableCell>
 						<StyledTableCell align='right'>default price</StyledTableCell>
 					</TableRow>
 				</TableHead>
@@ -64,10 +64,10 @@ export default function CustomizedTables() {
 								<StyledTableCell component='th' scope='row'>
 									{row.name}
 								</StyledTableCell>
-								<StyledTableCell align='right'>
+								<StyledTableCell align='center'>
 									{row.category.name}
 								</StyledTableCell>
-								<StyledTableCell align='right'>
+								<StyledTableCell align='center'>
 									{row.salesPrice}
 								</StyledTableCell>
 								<StyledTableCell align='right'>
